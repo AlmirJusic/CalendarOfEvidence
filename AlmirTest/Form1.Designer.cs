@@ -37,12 +37,19 @@
             this.cmbVrstePrisustva = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.btnDodajPrekoKalendara = new System.Windows.Forms.Button();
             this.btnIzbrisiPrekoKalendara = new System.Windows.Forms.Button();
             this.mpK_Calendar1 = new MPK_Calendar.MPK_Calendar();
             this.label3 = new System.Windows.Forms.Label();
             this.lblZaposlenik = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZaposleniciPrisustva)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,34 +152,28 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Vrsta prisustva:";
             // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.BackColor = System.Drawing.Color.Yellow;
-            this.monthCalendar1.FirstDayOfWeek = System.Windows.Forms.Day.Monday;
-            this.monthCalendar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monthCalendar1.Location = new System.Drawing.Point(619, 69);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 6;
-            this.monthCalendar1.Visible = false;
-            // 
             // btnDodajPrekoKalendara
             // 
-            this.btnDodajPrekoKalendara.Location = new System.Drawing.Point(766, 414);
+            this.btnDodajPrekoKalendara.BackColor = System.Drawing.Color.Lime;
+            this.btnDodajPrekoKalendara.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDodajPrekoKalendara.Location = new System.Drawing.Point(769, 394);
             this.btnDodajPrekoKalendara.Name = "btnDodajPrekoKalendara";
             this.btnDodajPrekoKalendara.Size = new System.Drawing.Size(138, 47);
             this.btnDodajPrekoKalendara.TabIndex = 7;
             this.btnDodajPrekoKalendara.Text = "Dodaj prisustvo";
-            this.btnDodajPrekoKalendara.UseVisualStyleBackColor = true;
+            this.btnDodajPrekoKalendara.UseVisualStyleBackColor = false;
             this.btnDodajPrekoKalendara.Click += new System.EventHandler(this.btnDodajPrekoKalendara_Click);
             // 
             // btnIzbrisiPrekoKalendara
             // 
-            this.btnIzbrisiPrekoKalendara.Location = new System.Drawing.Point(936, 414);
+            this.btnIzbrisiPrekoKalendara.BackColor = System.Drawing.Color.Red;
+            this.btnIzbrisiPrekoKalendara.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIzbrisiPrekoKalendara.Location = new System.Drawing.Point(939, 394);
             this.btnIzbrisiPrekoKalendara.Name = "btnIzbrisiPrekoKalendara";
             this.btnIzbrisiPrekoKalendara.Size = new System.Drawing.Size(142, 47);
             this.btnIzbrisiPrekoKalendara.TabIndex = 8;
-            this.btnIzbrisiPrekoKalendara.Text = "Izbrisi prisustvo";
-            this.btnIzbrisiPrekoKalendara.UseVisualStyleBackColor = true;
+            this.btnIzbrisiPrekoKalendara.Text = "Izbriši prisustvo";
+            this.btnIzbrisiPrekoKalendara.UseVisualStyleBackColor = false;
             this.btnIzbrisiPrekoKalendara.Click += new System.EventHandler(this.btnIzbrisiPrekoKalendara_Click);
             // 
             // mpK_Calendar1
@@ -196,7 +197,7 @@
             this.mpK_Calendar1.Name = "mpK_Calendar1";
             this.mpK_Calendar1.NoApptFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.mpK_Calendar1.NonselectedDayFontColor = System.Drawing.Color.Black;
-            this.mpK_Calendar1.SelectedDate = new System.DateTime(2023, 5, 3, 0, 0, 0, 0);
+            this.mpK_Calendar1.SelectedDate = new System.DateTime(2023, 5, 8, 0, 0, 0, 0);
             this.mpK_Calendar1.SelectedDayColor = System.Drawing.Color.LightSteelBlue;
             this.mpK_Calendar1.SelectedDayFontColor = System.Drawing.Color.White;
             this.mpK_Calendar1.ShowCurrentMonthInDay = false;
@@ -224,17 +225,100 @@
             this.lblZaposlenik.Size = new System.Drawing.Size(0, 32);
             this.lblZaposlenik.TabIndex = 11;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(191, 394);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(19, 16);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "    ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Green;
+            this.label5.Location = new System.Drawing.Point(61, 394);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(19, 16);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "    ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Yellow;
+            this.label6.Location = new System.Drawing.Point(328, 394);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(19, 16);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "    ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Gray;
+            this.label7.Location = new System.Drawing.Point(493, 394);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(19, 16);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "    ";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(216, 394);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(57, 16);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Odsutan";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(86, 394);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(55, 16);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Prisutan";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(353, 394);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(87, 16);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Na bolovanju";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(518, 394);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(91, 16);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "Na godišnjem";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1240, 502);
+            this.ClientSize = new System.Drawing.Size(1240, 499);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.lblZaposlenik);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.mpK_Calendar1);
             this.Controls.Add(this.btnIzbrisiPrekoKalendara);
             this.Controls.Add(this.btnDodajPrekoKalendara);
-            this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbVrstePrisustva);
@@ -257,7 +341,6 @@
         private System.Windows.Forms.ComboBox cmbVrstePrisustva;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Button btnDodajPrekoKalendara;
         private System.Windows.Forms.Button btnIzbrisiPrekoKalendara;
         private MPK_Calendar.MPK_Calendar mpK_Calendar1;
@@ -267,6 +350,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Datum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Prisustvo;
         private System.Windows.Forms.DataGridViewButtonColumn Delete;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
     }
 }
 

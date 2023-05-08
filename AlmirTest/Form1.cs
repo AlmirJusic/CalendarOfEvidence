@@ -56,8 +56,10 @@ namespace AlmirTest
         {
             try
             {
-                string selectQuery = "SELECT * FROM VrstePrisustva";
+                string selectQuery = "proc_getVrstePrisustva";
                 cmd = new SqlCommand(selectQuery, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
                 SqlDataAdapter adpt = new SqlDataAdapter(selectQuery, con);
                 
                 DataTable table = new DataTable();
@@ -79,8 +81,12 @@ namespace AlmirTest
         {
             try
             {   
-                string selectQuery = "SELECT ZaposlenikID, Ime+' '+Prezime+' | '+Odjel as ip FROM Zaposlenici ORDER BY 2";
-                SqlDataAdapter adpt = new SqlDataAdapter(selectQuery, con);
+                string selectQuery = "proc_getZaposlenici";
+                cmd=new SqlCommand(selectQuery, con);
+                cmd.CommandType= CommandType.StoredProcedure;
+
+                SqlDataAdapter adpt = new SqlDataAdapter(cmd);
+
                 DataTable table = new DataTable();
                 adpt.Fill(table);
 
@@ -102,23 +108,19 @@ namespace AlmirTest
            GetFilteredData();
            LoadDatumi();
            lblZaposlenik.Text= cmbZaposlenici.Text;
-
-            
-
-
-
         }
 
         private void LoadDatumi()
         {
             int selectedZaposlenikID = Convert.ToInt32(cmbZaposlenici.SelectedValue);
 
-            string selectQuery = "SELECT * FROM Zaposlenik_VrstaPrisustva as zvp inner join VrstePrisustva as vp on zvp.VrstaPrisustvaID=vp.VrstaPrisustvaID WHERE ZaposlenikID=@IDZaposlenik";
+            string selectQuery = "proc_getDatumi";
 
             try
             {
                 con.Open();
                 cmd=new SqlCommand(selectQuery, con);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
                 
                 DataTable table = new DataTable();
@@ -145,17 +147,10 @@ namespace AlmirTest
                     } 
                     
                 }
-                monthCalendar1.BoldedDates = mc.BoldedDates;
                 mpK_Calendar1.BoldedDates = mc.BoldedDates;
 
 
                 mpK_Calendar1.Refresh();
-
-
-
-
-
-
 
                 con.Close();
             }
@@ -172,14 +167,13 @@ namespace AlmirTest
         {
             GetFilteredData();
             dgvZaposleniciPrisustva.Columns[2].Visible = false;
-            //LoadDatumi();
         }
         private void GetFilteredData()
         {
             int selectedZaposlenikID = Convert.ToInt32(cmbZaposlenici.SelectedValue);
             int selectedVrstaPrisustvaID = Convert.ToInt32(cmbVrstePrisustva.SelectedValue);
 
-            string selectQuery = "SELECT Zaposlenik_VrstaPrisustvaID,Datum  FROM Zaposlenik_VrstaPrisustva WHERE ZaposlenikID=@IDZaposlenik AND VrstaPrisustvaID=@IDVrstaPrisustva ORDER BY CAST(Datum AS DATE) DESC";
+            string selectQuery = "proc_getFilteredData";
             DataTable table = new DataTable();
 
 
@@ -187,18 +181,19 @@ namespace AlmirTest
             {
                 con.Open();
                 cmd = new SqlCommand(selectQuery, con);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
                 cmd.Parameters.AddWithValue("@IDVrstaPrisustva",selectedVrstaPrisustvaID);
 
                 if (cmbVrstePrisustva.Text == "SVE")
                 {
 
-                    string selectQueryGetAll = "SELECT zpv.Zaposlenik_VrstaPrisustvaID,zpv.Datum, vp.Naziv FROM Zaposlenik_VrstaPrisustva as zpv inner join VrstePrisustva as vp on zpv.VrstaPrisustvaID=vp.VrstaPrisustvaID  WHERE ZaposlenikID=@IDZaposlenik ORDER BY CAST(Datum AS DATE) DESC";
+                    string selectQueryGetAll = "proc_getFilteredDataSVE";
                     cmd = new SqlCommand(selectQueryGetAll, con);
+                    cmd.CommandType=CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
                     
                 }
-                // CONVERT(VARCHAR(10), zpv.Datum, 105) + ' ' + CONVERT(VARCHAR(8), zpv.Datum, 108) as 
 
                 SqlDataReader reader =cmd.ExecuteReader();
 
@@ -294,8 +289,9 @@ namespace AlmirTest
                         con.Open();
                         int selectedID = (int)dgvZaposleniciPrisustva.Rows[e.RowIndex].Cells[0].Value;
 
-                        string selectedQuery= "DELETE FROM Zaposlenik_VrstaPrisustva WHERE Zaposlenik_VrstaPrisustvaID = @ID";
-                        cmd=new SqlCommand(selectedQuery, con);
+                        string deleteQuery= "proc_deleteFromDataGridView";
+                        cmd=new SqlCommand(deleteQuery, con);
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@ID", selectedID);
                         cmd.ExecuteNonQuery();
 
@@ -343,9 +339,10 @@ namespace AlmirTest
                 con.Open();
 
                 
-                string insertQuery = "INSERT INTO Zaposlenik_VrstaPrisustva VALUES (@IDZaposlenik,@IDVrstaPrisustva,@Datum)";
+                string insertQuery = "proc_insertZaposlenikVrstaPrisustva";
 
                 cmd = new SqlCommand(insertQuery, con);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
                 cmd.Parameters.AddWithValue("@IDVrstaPrisustva", selectedVrstaID);
                 cmd.Parameters.AddWithValue("@Datum", datum);
@@ -367,12 +364,13 @@ namespace AlmirTest
         {
             int selectedZaposlenikID = Convert.ToInt32(cmbZaposlenici.SelectedValue);
             DataTable table = new DataTable();
-            string selectQueryGetAll = "SELECT * FROM Zaposlenik_VrstaPrisustva WHERE ZaposlenikID=@IDZaposlenik ORDER BY CAST(Datum AS DATE) DESC";
+            string selectQueryGetAll = "proc_getFilteredDataSVE";
 
             try
             {
                 con.Open();
                 cmd = new SqlCommand(selectQueryGetAll, con);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
 
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -419,8 +417,9 @@ namespace AlmirTest
                     DateTime datum = mpK_Calendar1.SelectedDate;
 
 
-                    string deleteQuery = "DELETE FROM Zaposlenik_VrstaPrisustva WHERE ZaposlenikID=@IDZaposlenik AND VrstaPrisustvaID=@IDVrstaPrisustva AND Datum=@Datum";
+                    string deleteQuery = "proc_deleteZaposlenikVrstaPrisustva";
                     cmd=new SqlCommand(deleteQuery,con);
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
                     cmd.Parameters.AddWithValue("@IDVrstaPrisustva", selectedVrstaID);
                     cmd.Parameters.AddWithValue("@Datum",datum);
@@ -438,7 +437,5 @@ namespace AlmirTest
                 finally { con.Close(); }    
             }
         }
-
-        
     }
 }
