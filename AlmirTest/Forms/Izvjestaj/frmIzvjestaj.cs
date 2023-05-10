@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -14,19 +15,22 @@ namespace AlmirTest
 {
     public partial class frmIzvjestaj : Form
     {
+        SqlConnection con;
+        SqlCommand cmd;
+        string dbContext = ConfigurationManager.ConnectionStrings["AlmirTestConnectionString"].ConnectionString;
         public frmIzvjestaj()
         {
             InitializeComponent();
+
+            con = new SqlConnection(dbContext);
+            cmd = con.CreateCommand();
         }
-        SqlConnection con;
-        SqlCommand cmd;
+        
 
 
         private void frmIzvjestaj_Load(object sender, EventArgs e)
         {
-            con = new SqlConnection("Data Source = SUN-TEST; Initial Catalog = AlmirTest; Integrated Security = True");
-            cmd = con.CreateCommand();
-
+            
             string selectQuery = "proc_getSVE";
             cmd = new SqlCommand(selectQuery, con);
             cmd.CommandType = CommandType.StoredProcedure;

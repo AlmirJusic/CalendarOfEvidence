@@ -15,16 +15,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Xml.Schema;
-using static System.Net.Mime.MediaTypeNames;
+using System.Configuration;
 
 namespace AlmirTest
 {
-    
-    public partial class Form1 : Form
+
+    public partial class frmMain : Form
     {
-        public Form1()
+        SqlConnection con;
+        SqlCommand cmd;
+        string dbContext = ConfigurationManager.ConnectionStrings["AlmirTestConnectionString"].ConnectionString;
+        public frmMain()
         {
             InitializeComponent();
+            con = new SqlConnection(dbContext);
+            cmd = con.CreateCommand();
+
+
             dgvZaposleniciPrisustva.AutoGenerateColumns = false;
             dgvZaposleniciPrisustva.RowHeadersVisible = false;
             dgvZaposleniciPrisustva.Columns[1].DefaultCellStyle.Format = "dd-MM-yyyy";
@@ -34,13 +41,11 @@ namespace AlmirTest
 
 
         }
-        SqlConnection con;
-        SqlCommand cmd;
-        
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            con = new SqlConnection("Data Source = SUN-TEST; Initial Catalog = AlmirTest; Integrated Security = True");
-            cmd=con.CreateCommand();
+
 
 
             LoadZaposlenici();
@@ -48,10 +53,10 @@ namespace AlmirTest
 
             mpK_Calendar1.SelectedDate = DateTime.Now;
 
-            
+
 
         }
-        
+
         private void LoadVrstePrisustva()
         {
             try
@@ -61,29 +66,32 @@ namespace AlmirTest
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataAdapter adpt = new SqlDataAdapter(selectQuery, con);
-                
+
                 DataTable table = new DataTable();
                 adpt.Fill(table);
 
-                
+
                 cmbVrstePrisustva.DisplayMember = "Naziv";
                 cmbVrstePrisustva.ValueMember = "VrstaPrisustvaID";
                 cmbVrstePrisustva.DataSource = table;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message+" "+ex.InnerException?.Message);
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }
-            finally { con.Close(); }
+            finally
+            {
+                con.Close();
+            }
         }
 
         private void LoadZaposlenici()
         {
             try
-            {   
+            {
                 string selectQuery = "proc_getZaposlenici";
-                cmd=new SqlCommand(selectQuery, con);
-                cmd.CommandType= CommandType.StoredProcedure;
+                cmd = new SqlCommand(selectQuery, con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataAdapter adpt = new SqlDataAdapter(cmd);
 
@@ -94,20 +102,20 @@ namespace AlmirTest
                 cmbZaposlenici.DisplayMember = "ip";
                 cmbZaposlenici.ValueMember = "ZaposlenikID";
                 cmbZaposlenici.DataSource = table;
-        }
-            catch(Exception ex) 
-            {
-                MessageBox.Show(ex.Message+" "+ex.InnerException?.Message);
             }
-            finally {con.Close();}
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
+            }
+            finally { con.Close(); }
         }
 
         private void cmbZaposlenici_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
-           GetFilteredData();
-           LoadDatumi();
-           lblZaposlenik.Text= cmbZaposlenici.Text;
+
+            GetFilteredData();
+            LoadDatumi();
+            lblZaposlenik.Text = cmbZaposlenici.Text;
         }
 
         private void LoadDatumi()
@@ -119,33 +127,33 @@ namespace AlmirTest
             try
             {
                 con.Open();
-                cmd=new SqlCommand(selectQuery, con);
+                cmd = new SqlCommand(selectQuery, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
-                
+
                 DataTable table = new DataTable();
-                SqlDataAdapter adapter=new SqlDataAdapter(cmd);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(table);
 
-                MonthCalendar mc=new MonthCalendar();
+                MonthCalendar mc = new MonthCalendar();
                 MPK_Calendar.MPK_Calendar mpk = new MPK_Calendar.MPK_Calendar();
 
                 string vrsta = cmbVrstePrisustva.Text;
-                foreach(DataRow row in table.Rows) 
+                foreach (DataRow row in table.Rows)
                 {
-                    if ((int)row["ZaposlenikID"]==selectedZaposlenikID)
+                    if ((int)row["ZaposlenikID"] == selectedZaposlenikID)
                     {
-                        if (row["Datum"]!=DBNull.Value)
+                        if (row["Datum"] != DBNull.Value)
                         {
                             DateTime date = (DateTime)row["Datum"];
-                            
+
                             mc.AddBoldedDate(date);
-                           
+
 
 
                         }
-                    } 
-                    
+                    }
+
                 }
                 mpK_Calendar1.BoldedDates = mc.BoldedDates;
 
@@ -156,17 +164,16 @@ namespace AlmirTest
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message+" "+ex.InnerException?.Message);
+                MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
             }
             finally { con.Close(); }
         }
 
-        
+
 
         private void cmbVrstePrisustva_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetFilteredData();
-            //dgvZaposleniciPrisustva.Columns[2].Visible = false;
         }
         private void GetFilteredData()
         {
@@ -183,25 +190,25 @@ namespace AlmirTest
                 cmd = new SqlCommand(selectQuery, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
-                cmd.Parameters.AddWithValue("@IDVrstaPrisustva",selectedVrstaPrisustvaID);
+                cmd.Parameters.AddWithValue("@IDVrstaPrisustva", selectedVrstaPrisustvaID);
 
                 if (cmbVrstePrisustva.Text == "SVE")
                 {
 
                     string selectQueryGetAll = "proc_getFilteredDataSVE";
                     cmd = new SqlCommand(selectQueryGetAll, con);
-                    cmd.CommandType=CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
-                    
+
                 }
 
-                SqlDataReader reader =cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
 
                 table.Load(reader);
 
-                dgvZaposleniciPrisustva.DataSource= table;
+                dgvZaposleniciPrisustva.DataSource = table;
 
-                
+
                 con.Close();
             }
             catch (Exception ex)
@@ -211,7 +218,7 @@ namespace AlmirTest
             finally { con.Close(); }
 
         }
-        
+
         private void dgvZaposleniciPrisustva_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             foreach (DataGridViewRow item in dgvZaposleniciPrisustva.Rows)
@@ -242,7 +249,6 @@ namespace AlmirTest
                 }
                 else if (vrsta == "SVE")
                 {
-                    //dgvZaposleniciPrisustva.Columns[2].Visible = true;
 
 
                     if (Convert.ToString(item.Cells["Prisustvo"].Value) == "DA")
@@ -271,26 +277,26 @@ namespace AlmirTest
 
         private void dgvZaposleniciPrisustva_SelectionChanged(object sender, EventArgs e)
         {
-           dgvZaposleniciPrisustva.ClearSelection();
+            dgvZaposleniciPrisustva.ClearSelection();
         }
 
-       
+
 
         private void dgvZaposleniciPrisustva_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex ==3 &&e.RowIndex>=0)
+            if (e.ColumnIndex == 3 && e.RowIndex >= 0)
             {
-                DialogResult result = MessageBox.Show("Jeste li sigurni da zelite izbrisati prisutnost?","Upozorenje",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("Jeste li sigurni da zelite izbrisati prisutnost?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                if(result== DialogResult.Yes)
+                if (result == DialogResult.Yes)
                 {
                     try
                     {
                         con.Open();
                         int selectedID = (int)dgvZaposleniciPrisustva.Rows[e.RowIndex].Cells[0].Value;
 
-                        string deleteQuery= "proc_deleteFromDataGridView";
-                        cmd=new SqlCommand(deleteQuery, con);
+                        string deleteQuery = "proc_deleteFromDataGridView";
+                        cmd = new SqlCommand(deleteQuery, con);
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@ID", selectedID);
                         cmd.ExecuteNonQuery();
@@ -300,7 +306,7 @@ namespace AlmirTest
                         LoadDatumi();
 
                     }
-                    catch (Exception ex )
+                    catch (Exception ex)
                     {
 
                         MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
@@ -316,7 +322,7 @@ namespace AlmirTest
             int selectedVrstaID = Convert.ToInt32(cmbVrstePrisustva.SelectedValue);
             DateTime datum = mpK_Calendar1.SelectedDate.Date;
 
-            
+
             if (selectedZaposlenikID <= 0 || selectedVrstaID <= 0 || datum == DateTime.MinValue)
             {
                 MessageBox.Show("Morate odabrati zaposlenika, vrstu prisustva i datum!", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -338,7 +344,7 @@ namespace AlmirTest
             {
                 con.Open();
 
-                
+
                 string insertQuery = "proc_insertZaposlenikVrstaPrisustva";
 
                 cmd = new SqlCommand(insertQuery, con);
@@ -357,7 +363,7 @@ namespace AlmirTest
                 MessageBox.Show("Greška pri unosu prisustva: " + ex.Message, "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally { con.Close(); }
-            
+
         }
 
         private bool Provjera(DateTime datum)
@@ -387,7 +393,7 @@ namespace AlmirTest
             }
             catch (Exception)
             {
-               
+
                 return false;
             }
             finally { con.Close(); }
@@ -398,13 +404,13 @@ namespace AlmirTest
 
         private void btnIzbrisiPrekoKalendara_Click(object sender, EventArgs e)
         {
-            
 
-            DialogResult result = MessageBox.Show("Jeste li sigurni da zelite izbrisati prisustvo?","Upozorenje",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+
+            DialogResult result = MessageBox.Show("Jeste li sigurni da zelite izbrisati prisustvo?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
-               
+
                 try
                 {
                     con.Open();
@@ -413,10 +419,10 @@ namespace AlmirTest
 
 
                     string deleteQuery = "proc_deleteZaposlenikVrstaPrisustva";
-                    cmd =new SqlCommand(deleteQuery,con);
+                    cmd = new SqlCommand(deleteQuery, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
-                    cmd.Parameters.AddWithValue("@Datum",datum);
+                    cmd.Parameters.AddWithValue("@Datum", datum);
                     cmd.ExecuteNonQuery();
 
                     con.Close();
@@ -428,11 +434,10 @@ namespace AlmirTest
 
                     MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
                 }
-                finally { con.Close(); }    
+                finally { con.Close(); }
             }
         }
 
-        
 
         private void btnIzvjestaj_Click(object sender, EventArgs e)
         {
@@ -440,6 +445,6 @@ namespace AlmirTest
             frm.Show();
         }
     }
-    
+
 }
 

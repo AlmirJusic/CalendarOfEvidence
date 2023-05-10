@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace AlmirTest {
+namespace AlmirTest.Reports {
     
     
     /// <summary>
@@ -809,7 +809,7 @@ namespace AlmirTest {
         }
     }
 }
-namespace AlmirTest.AlmirTestDataSetTableAdapters {
+namespace AlmirTest.Reports.AlmirTestDataSetTableAdapters {
     
     
     /// <summary>
