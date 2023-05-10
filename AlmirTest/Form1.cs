@@ -166,7 +166,7 @@ namespace AlmirTest
         private void cmbVrstePrisustva_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetFilteredData();
-            dgvZaposleniciPrisustva.Columns[2].Visible = false;
+            //dgvZaposleniciPrisustva.Columns[2].Visible = false;
         }
         private void GetFilteredData()
         {
@@ -230,19 +230,19 @@ namespace AlmirTest
                     item.DefaultCellStyle.BackColor = Color.Red;
                     item.DefaultCellStyle.ForeColor = Color.White;
                 }
-                else if (vrsta == "BOLOVANJE")
+                else if (vrsta == "BO")
                 {
                     item.DefaultCellStyle.BackColor = Color.Yellow;
                     item.DefaultCellStyle.ForeColor = Color.Red;
                 }
-                else if (vrsta == "GODISNJI")
+                else if (vrsta == "GO")
                 {
                     item.DefaultCellStyle.BackColor = Color.Gray;
                     item.DefaultCellStyle.ForeColor = Color.White;
                 }
                 else if (vrsta == "SVE")
                 {
-                    dgvZaposleniciPrisustva.Columns[2].Visible = true;
+                    //dgvZaposleniciPrisustva.Columns[2].Visible = true;
 
 
                     if (Convert.ToString(item.Cells["Prisustvo"].Value) == "DA")
@@ -255,12 +255,12 @@ namespace AlmirTest
                         item.DefaultCellStyle.BackColor = Color.Red;
                         item.DefaultCellStyle.ForeColor = Color.White;
                     }
-                    else if (Convert.ToString(item.Cells["Prisustvo"].Value) == "BOLOVANJE")
+                    else if (Convert.ToString(item.Cells["Prisustvo"].Value) == "BO")
                     {
                         item.DefaultCellStyle.BackColor = Color.Yellow;
                         item.DefaultCellStyle.ForeColor = Color.Red;
                     }
-                    else if (Convert.ToString(item.Cells["Prisustvo"].Value) == "GODISNJI")
+                    else if (Convert.ToString(item.Cells["Prisustvo"].Value) == "GO")
                     {
                         item.DefaultCellStyle.BackColor = Color.Gray;
                         item.DefaultCellStyle.ForeColor = Color.White;
@@ -271,7 +271,7 @@ namespace AlmirTest
 
         private void dgvZaposleniciPrisustva_SelectionChanged(object sender, EventArgs e)
         {
-            dgvZaposleniciPrisustva.ClearSelection();
+           dgvZaposleniciPrisustva.ClearSelection();
         }
 
        
@@ -398,11 +398,7 @@ namespace AlmirTest
 
         private void btnIzbrisiPrekoKalendara_Click(object sender, EventArgs e)
         {
-            if (cmbVrstePrisustva.Text == "SVE")
-            {
-                MessageBox.Show("Morate odabrati vrstu prisustva i datum!", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
 
             DialogResult result = MessageBox.Show("Jeste li sigurni da zelite izbrisati prisustvo?","Upozorenje",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
 
@@ -413,15 +409,13 @@ namespace AlmirTest
                 {
                     con.Open();
                     int selectedZaposlenikID = Convert.ToInt32(cmbZaposlenici.SelectedValue);
-                    int selectedVrstaID = Convert.ToInt32(cmbVrstePrisustva.SelectedValue);
                     DateTime datum = mpK_Calendar1.SelectedDate;
 
 
                     string deleteQuery = "proc_deleteZaposlenikVrstaPrisustva";
-                    cmd=new SqlCommand(deleteQuery,con);
+                    cmd =new SqlCommand(deleteQuery,con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IDZaposlenik", selectedZaposlenikID);
-                    cmd.Parameters.AddWithValue("@IDVrstaPrisustva", selectedVrstaID);
                     cmd.Parameters.AddWithValue("@Datum",datum);
                     cmd.ExecuteNonQuery();
 
@@ -437,5 +431,15 @@ namespace AlmirTest
                 finally { con.Close(); }    
             }
         }
+
+        
+
+        private void btnIzvjestaj_Click(object sender, EventArgs e)
+        {
+            frmIzvjestaj frm = new frmIzvjestaj();
+            frm.Show();
+        }
     }
+    
 }
+
