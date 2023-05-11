@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlmirTest", "AlmirTest\Almi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPK_Calendar", "MPK_Calendar\MPK_Calendar.csproj", "{406C22DA-812C-403E-A7DA-8C231F188D8F}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupEvidencija", "SetupEvidencija\SetupEvidencija.vdproj", "{7326A59A-5947-44FE-BD83-4E59930095E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{406C22DA-812C-403E-A7DA-8C231F188D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{406C22DA-812C-403E-A7DA-8C231F188D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{406C22DA-812C-403E-A7DA-8C231F188D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7326A59A-5947-44FE-BD83-4E59930095E8}.Debug|Any CPU.ActiveCfg = Release
+		{7326A59A-5947-44FE-BD83-4E59930095E8}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
