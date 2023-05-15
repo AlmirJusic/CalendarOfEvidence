@@ -37,8 +37,7 @@ namespace AlmirTest
             dgvZaposleniciPrisustva.Columns[1].DefaultCellStyle.Format = "dd-MM-yyyy";
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            System.Windows.Forms.Application.VisualStyleState = VisualStyleState.NoneEnabled;
-
+            //System.Windows.Forms.Application.VisualStyleState = VisualStyleState.NoneEnabled;
 
         }
 
@@ -46,14 +45,10 @@ namespace AlmirTest
         private void Form1_Load(object sender, EventArgs e)
         {
 
-
-
             LoadZaposlenici();
             LoadVrstePrisustva();
 
             mpK_Calendar1.SelectedDate = DateTime.Now;
-
-
 
         }
 
@@ -406,8 +401,6 @@ namespace AlmirTest
         }
 
 
-
-
         private void btnIzbrisiPrekoKalendara_Click(object sender, EventArgs e)
         {
 
@@ -443,7 +436,6 @@ namespace AlmirTest
                 finally { con.Close(); }
             }
         }
-
 
         private void btnIzvjestaj_Click(object sender, EventArgs e)
         {
