@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             this.dgvZaposleniciPrisustva = new System.Windows.Forms.DataGridView();
-            this.Zaposlenik_VrstaPrisustvaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Datum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prisustvo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cmbZaposlenici = new System.Windows.Forms.ComboBox();
             this.cmbVrstePrisustva = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -54,6 +50,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.Zaposlenik_VrstaPrisustvaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Datum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prisustvo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZaposleniciPrisustva)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -80,42 +80,8 @@
             this.dgvZaposleniciPrisustva.TabIndex = 0;
             this.dgvZaposleniciPrisustva.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvZaposleniciPrisustva_CellContentClick);
             this.dgvZaposleniciPrisustva.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvZaposleniciPrisustva_CellFormatting);
+            this.dgvZaposleniciPrisustva.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvZaposleniciPrisustva_ColumnHeaderMouseClick);
             this.dgvZaposleniciPrisustva.SelectionChanged += new System.EventHandler(this.dgvZaposleniciPrisustva_SelectionChanged);
-            // 
-            // Zaposlenik_VrstaPrisustvaID
-            // 
-            this.Zaposlenik_VrstaPrisustvaID.DataPropertyName = "Zaposlenik_VrstaPrisustvaID";
-            this.Zaposlenik_VrstaPrisustvaID.HeaderText = "Zaposlenik_VrstaPrisustvaID";
-            this.Zaposlenik_VrstaPrisustvaID.MinimumWidth = 6;
-            this.Zaposlenik_VrstaPrisustvaID.Name = "Zaposlenik_VrstaPrisustvaID";
-            this.Zaposlenik_VrstaPrisustvaID.ReadOnly = true;
-            this.Zaposlenik_VrstaPrisustvaID.Visible = false;
-            // 
-            // Datum
-            // 
-            this.Datum.DataPropertyName = "Datum";
-            this.Datum.HeaderText = "Datum";
-            this.Datum.MinimumWidth = 6;
-            this.Datum.Name = "Datum";
-            this.Datum.ReadOnly = true;
-            // 
-            // Prisustvo
-            // 
-            this.Prisustvo.DataPropertyName = "Naziv";
-            this.Prisustvo.HeaderText = "Prisustvo";
-            this.Prisustvo.MinimumWidth = 6;
-            this.Prisustvo.Name = "Prisustvo";
-            this.Prisustvo.ReadOnly = true;
-            // 
-            // Delete
-            // 
-            this.Delete.FillWeight = 40F;
-            this.Delete.HeaderText = "Delete";
-            this.Delete.MinimumWidth = 6;
-            this.Delete.Name = "Delete";
-            this.Delete.ReadOnly = true;
-            this.Delete.Text = "Delete";
-            this.Delete.UseColumnTextForButtonValue = true;
             // 
             // cmbZaposlenici
             // 
@@ -360,6 +326,41 @@
             this.label13.TabIndex = 29;
             this.label13.Text = "   ";
             // 
+            // Zaposlenik_VrstaPrisustvaID
+            // 
+            this.Zaposlenik_VrstaPrisustvaID.DataPropertyName = "Zaposlenik_VrstaPrisustvaID";
+            this.Zaposlenik_VrstaPrisustvaID.HeaderText = "Zaposlenik_VrstaPrisustvaID";
+            this.Zaposlenik_VrstaPrisustvaID.MinimumWidth = 6;
+            this.Zaposlenik_VrstaPrisustvaID.Name = "Zaposlenik_VrstaPrisustvaID";
+            this.Zaposlenik_VrstaPrisustvaID.ReadOnly = true;
+            this.Zaposlenik_VrstaPrisustvaID.Visible = false;
+            // 
+            // Datum
+            // 
+            this.Datum.DataPropertyName = "Datum";
+            this.Datum.HeaderText = "Datum";
+            this.Datum.MinimumWidth = 6;
+            this.Datum.Name = "Datum";
+            this.Datum.ReadOnly = true;
+            // 
+            // Prisustvo
+            // 
+            this.Prisustvo.DataPropertyName = "Naziv";
+            this.Prisustvo.HeaderText = "Prisustvo";
+            this.Prisustvo.MinimumWidth = 6;
+            this.Prisustvo.Name = "Prisustvo";
+            this.Prisustvo.ReadOnly = true;
+            // 
+            // Delete
+            // 
+            this.Delete.FillWeight = 40F;
+            this.Delete.HeaderText = "Izbriši sve ";
+            this.Delete.MinimumWidth = 6;
+            this.Delete.Name = "Delete";
+            this.Delete.ReadOnly = true;
+            this.Delete.Text = "Izbriši";
+            this.Delete.UseColumnTextForButtonValue = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -409,10 +410,6 @@
         private System.Windows.Forms.Button btnIzbrisiPrekoKalendara;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblZaposlenik;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Zaposlenik_VrstaPrisustvaID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Datum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Prisustvo;
-        private System.Windows.Forms.DataGridViewButtonColumn Delete;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -426,6 +423,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Zaposlenik_VrstaPrisustvaID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Datum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Prisustvo;
+        private System.Windows.Forms.DataGridViewButtonColumn Delete;
     }
 }
 

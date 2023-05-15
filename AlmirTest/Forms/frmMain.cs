@@ -329,6 +329,12 @@ namespace AlmirTest
                 return;
             }
 
+            if (datum > DateTime.Now || datum.Month<DateTime.Now.Month)
+            {
+                MessageBox.Show("Ne mozete odabrati datum veći od današnjeg!", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (cmbVrstePrisustva.Text == "SVE")
             {
                 MessageBox.Show("Morate odabrati vrstu prisustva i datum!", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -443,6 +449,40 @@ namespace AlmirTest
         {
             frmIzvjestaj frm = new frmIzvjestaj();
             frm.Show();
+        }
+
+        private void dgvZaposleniciPrisustva_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if(e.ColumnIndex == 3) 
+            {
+                DialogResult result = MessageBox.Show("Jeste li sigurni da zelite izbrisati sva prisustva za ovaj mjesec?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+
+                    try
+                    {
+                        con.Open();
+                        
+                        string deleteQuery = "proc_deleteSvaPrisustvaKorisnika";
+                        cmd = new SqlCommand(deleteQuery, con);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        
+                        cmd.ExecuteNonQuery();
+
+                        con.Close();
+                        LoadDatumi();
+                        GetFilteredData();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show(ex.Message + " " + ex.InnerException?.Message);
+                    }
+                    finally { con.Close(); }
+                }
+
+            }
         }
     }
 
